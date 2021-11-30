@@ -1,0 +1,26 @@
+name: web_storage_benchmarks
+description: Benchmarks for different storage libraries in Flutter Web
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.13.0 <3.0.0"
+
+dependencies:
+  charts_flutter: ^0.12.0
+  flutter:
+    sdk: flutter
+  hive: ^2.0.4
+  js: ^0.6.3
+  sembast_web: ^2.0.1+1
+  shared_preferences: ^2.0.9
+
+dev_dependencies:
+  amplify_lints: ^1.0.0
+  build_runner: ^2.0.0
+  flutter_test:
+    sdk: flutter
+  hive_generator: ^1.1.1
+
+flutter:
+  uses-material-design: true
