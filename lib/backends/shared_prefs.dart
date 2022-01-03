@@ -29,13 +29,7 @@ class SharedPrefsBenchmark extends Benchmark {
   void get(Document doc) => sharedPrefs.get(doc.id);
 
   @override
-  Future<void> removeAll(List<Document> docs) {
-    final futures = <Future<void>>[];
-    for (var doc in docs) {
-      futures.add(sharedPrefs.remove(doc.id));
-    }
-    return Future.wait(futures);
-  }
+  Future<void> removeAll(List<Document> docs) => sharedPrefs.clear();
 
   @override
   Future<void> reset() => sharedPrefs.clear();

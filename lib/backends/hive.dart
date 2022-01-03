@@ -33,9 +33,5 @@ class HiveBenchmark extends Benchmark {
   FutureOr<void> get(Document doc) => box.get(doc.id);
 
   @override
-  Future<void> removeAll(List<Document> docs) async {
-    for (var doc in docs) {
-      await box.delete(doc.id);
-    }
-  }
+  Future<void> removeAll(List<Document> docs) => box.clear();
 }

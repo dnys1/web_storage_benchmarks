@@ -38,11 +38,6 @@ class SembastBenchmark extends Benchmark {
   Future<void> get(Document doc) => store.record(doc.id).get(database);
 
   @override
-  Future<void> removeAll(List<Document> docs) {
-    final List<Future<void>> futures = [];
-    for (var doc in docs) {
-      futures.add(store.record(doc.id).delete(database));
-    }
-    return Future.wait(futures);
-  }
+  Future<void> removeAll(List<Document> docs) =>
+      store.records(docs.map((doc) => doc.id)).delete(database);
 }

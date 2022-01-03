@@ -29,7 +29,7 @@ class SqliteBenchmark extends Benchmark {
   void addAll(List<JSDocument> docs) {
     var query = '';
     for (var doc in docs) {
-      query += 'INSERT INTO benchmark VALUES ("${doc.id}", ${doc.data});\n';
+      query += 'INSERT INTO benchmark VALUES ("${doc.id}", ${doc.data});';
     }
     _db!.run(query);
   }
@@ -41,14 +41,12 @@ class SqliteBenchmark extends Benchmark {
 
   @override
   void removeAll(List<JSDocument> docs) {
-    var query = 'DELETE FROM benchmark';
-    _db!.run(query);
+    _db!.run('DELETE FROM benchmark');
   }
 
   @override
   Future<void> reset() async {
-    _db!.run('DROP TABLE benchmark;');
-    await setup();
+    _db!.run('DELETE FROM benchmark;');
   }
 
   @override
