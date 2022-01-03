@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:charts_flutter/flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_storage_benchmarks/backends/common.dart';
 import 'package:web_storage_benchmarks/document.dart';
 
 class SharedPrefsBenchmark extends Benchmark {
-  SharedPrefsBenchmark() : super('Shared Prefs');
+  SharedPrefsBenchmark()
+      : super('Shared Prefs', Color.fromHex(code: '#fb8500'));
 
   late final SharedPreferences sharedPrefs;
 
@@ -15,14 +17,25 @@ class SharedPrefsBenchmark extends Benchmark {
   }
 
   @override
-  FutureOr<void> add(Document document) =>
-      sharedPrefs.setDouble(document.id, document.data);
+  Future<void> addAll(List<Document> docs) {
+    final futures = <Future<void>>[];
+    for (var doc in docs) {
+      futures.add(sharedPrefs.setDouble(doc.id, doc.data));
+    }
+    return Future.wait(futures);
+  }
 
   @override
-  FutureOr<void> get(Document document) => sharedPrefs.get(document.id);
+  void get(Document doc) => sharedPrefs.get(doc.id);
 
   @override
-  FutureOr<void> remove(Document document) => sharedPrefs.remove(document.id);
+  Future<void> removeAll(List<Document> docs) {
+    final futures = <Future<void>>[];
+    for (var doc in docs) {
+      futures.add(sharedPrefs.remove(doc.id));
+    }
+    return Future.wait(futures);
+  }
 
   @override
   Future<void> reset() => sharedPrefs.clear();

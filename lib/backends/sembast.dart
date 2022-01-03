@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:charts_flutter/flutter.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast_web/sembast_web.dart';
 import 'package:web_storage_benchmarks/backends/common.dart';
 import 'package:web_storage_benchmarks/document.dart';
 
 class SembastBenchmark extends Benchmark {
-  SembastBenchmark() : super('Sembast');
+  SembastBenchmark() : super('Sembast', Color.fromHex(code: '#023047'));
 
   static final factory = databaseFactoryWeb;
   late final Database database;
@@ -22,17 +23,26 @@ class SembastBenchmark extends Benchmark {
   }
 
   @override
-  Future<void> add(Document document) =>
-      store.record(document.id).add(database, document.data);
+  Future<void> addAll(List<Document> docs) {
+    final List<Future<void>> futures = [];
+    for (var doc in docs) {
+      futures.add(store.record(doc.id).add(database, doc.data));
+    }
+    return Future.wait(futures);
+  }
 
   @override
   Future<void> reset() => store.drop(database);
 
   @override
-  Future<void> get(Document document) =>
-      store.record(document.id).get(database);
+  Future<void> get(Document doc) => store.record(doc.id).get(database);
 
   @override
-  Future<void> remove(Document document) =>
-      store.record(document.id).delete(database);
+  Future<void> removeAll(List<Document> docs) {
+    final List<Future<void>> futures = [];
+    for (var doc in docs) {
+      futures.add(store.record(doc.id).delete(database));
+    }
+    return Future.wait(futures);
+  }
 }

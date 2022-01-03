@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:charts_flutter/flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:web_storage_benchmarks/backends/common.dart';
 import 'package:web_storage_benchmarks/document.dart';
 
 class HiveBenchmark extends Benchmark {
-  HiveBenchmark() : super('Hive');
+  HiveBenchmark() : super('Hive', Color.fromHex(code: '#8ecae6'));
 
   late final Box box;
 
@@ -19,14 +20,22 @@ class HiveBenchmark extends Benchmark {
   }
 
   @override
-  Future<void> add(Document document) => box.add(document);
+  Future<void> addAll(List<Document> docs) async {
+    for (var doc in docs) {
+      await box.add(doc);
+    }
+  }
 
   @override
   Future<void> reset() => box.clear();
 
   @override
-  FutureOr<void> get(Document document) => box.get(document.id);
+  FutureOr<void> get(Document doc) => box.get(doc.id);
 
   @override
-  Future<void> remove(Document document) => box.delete(document.id);
+  Future<void> removeAll(List<Document> docs) async {
+    for (var doc in docs) {
+      await box.delete(doc.id);
+    }
+  }
 }

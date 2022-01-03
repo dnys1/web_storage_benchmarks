@@ -1,4 +1,7 @@
+@JS()
+
 import 'package:hive/hive.dart';
+import 'package:js/js.dart';
 
 part 'document.g.dart';
 
@@ -14,9 +17,19 @@ class Document {
 
   @HiveField(1)
   final double data;
+}
 
-  Map<String, Object> toJson() => {
-        'id': id,
-        'data': data,
-      };
+@JS()
+@anonymous
+class JSDocument implements Document {
+  external factory JSDocument({
+    String id,
+    double data,
+  });
+
+  @override
+  external String get id;
+
+  @override
+  external double get data;
 }

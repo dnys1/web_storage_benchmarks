@@ -18,7 +18,7 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="description" content="Bechmarking of different storage libraries on Flutter Web">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -26,8 +26,26 @@
   <meta name="apple-mobile-web-app-title" content="web_storage_benchmarks">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-  <title>web_storage_benchmarks</title>
+  <title>Web Storage Benchmarks</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- LokiJS -->
+  <script src="https://unpkg.com/lokijs@1.5.12/src/lokijs.js"></script>
+  <script src="https://unpkg.com/lokijs@1.5.12/src/incremental-indexeddb-adapter.js"></script>
+
+  <!-- SQLite.js -->
+  <script src="/js/sql-wasm.js"></script>
+  <script>
+    const config = {
+      locateFile: file => `/js/${file}`,
+    }
+
+    async function getSqlDb() {
+      const SQL = await initSqlJs(config);
+      const db = new SQL.Database();
+      return db;
+    }
+  </script>
 </head>
 <body>
   <!-- This script installs service_worker.js to provide PWA functionality to
