@@ -1,16 +1,15 @@
-# web_storage_benchmarks
+# Flutter Web Storage Benchmarks
 
-A new Flutter project.
+Bechmarking of different storage libraries on Flutter Web. For more information, see the blog [post](https://dillonnys.com/flutter-web-storage-benchmarks/).
 
-## Getting Started
+![Benchmark Results](https://dillonnys.com/images/storage/benchmark_results.png)
 
-This project is a starting point for a Flutter application.
+| Library | Engine | Add (ms) | Get (ms) | Delete (ms) |
+| ------- | ------ | -------- | -------- | ----------- |
+| [Hive](https://pub.dev/packages/hive) | IndexedDB | 470 | 0 | 2 |
+| [SQLite](https://sql.js.org/#/)* | In-Mem | 29 | 10 | 0 |
+| [Sembast](https://pub.dev/packages/sembast_web) | IndexedDB | 546 | 3 | 461 |
+| [Loki](https://github.com/techfort/LokiJS)* | IndexedDB | 91 | 2 | 0 |
+| [Shared Preferences](https://pub.dev/packages/shared_preferences) | LocalStorage | 1 | 0 | 2 | 
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+\* Uses native JS library via interop.
